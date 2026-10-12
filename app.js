@@ -4,7 +4,7 @@
 
 const $ = (id) => document.getElementById(id);
 const OTC_MINT = "MukLDtJ8Cx9DxLbeyLRSWPSposTMWuwHANbuaudpump";
-const REV_MINT = ""; // set on the operator's explicit link, after on-chain verification
+const REV_MINT = "JECEQPqNGJsPsiy26pMgp9pffWKsf6S4eSz6Vqxupump"; // set on the operator's explicit link, after on-chain verification
 
 let D = null, solUsd = null, series = "earned", range = 30;
 
