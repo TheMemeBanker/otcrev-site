@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>REV — OTC protocol revenue</title>
+<meta name="description" content="The revenue desk for OTC. Every lamport claimed in creator fees on behalf of a coin launched on OTC, and where it went: holders, buyback and burn, the desk pot, the protocol. Read from the protocol's own ledger.">
+<link rel="icon" type="image/png" sizes="64x64" href="./favicon-till.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon-till-32.png">
+<meta property="og:title" content="REV — OTC protocol revenue">
+<meta property="og:description" content="All-time protocol revenue for OTC: creator fees claimed, paid to holders, bought and burned. Every claim, burn and payout is a signature.">
+<meta property="og:image" content="https://otcrev.cash/logo-till.png">
+<meta name="theme-color" content="#141414">
+<link rel="stylesheet" href="./theirs.css">
+<link rel="stylesheet" href="./rev.css">
+<script>try{var t=localStorage.getItem("rev-theme");document.documentElement.setAttribute("data-theme",t||"dark")}catch(e){}</script>
+</head>
+<body class="min-h-screen bg-paper text-ink">
+<div class="rv-page">
+  <button id="sideToggle" class="rv-side-toggle" type="button" aria-label="Open menu">
+    <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+  </button>
+  <div id="sideScrim" class="rv-side-scrim" hidden></div>
+  <aside id="sidebar" class="rv-side" aria-label="OTC sites">
+    <a class="rv-side-brand" href="https://otcdesks.cash/" target="_blank" rel="noopener">
+      <span class="rv-side-brand-word">OTC</span>
+    </a>
+    <nav class="rv-side-nav">
+      <a href="https://otcdesks.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M2.5 7 8 2.5 13.5 7v6a1 1 0 0 1-1 1h-9a1 1 0 0 1-1-1Z"/><path d="M6.5 14v-4h3v4"/></svg>Home</a>
+      <a href="https://otcdesks.cash/explore" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><circle cx="7" cy="7" r="4.5"/><path d="m10.5 10.5 3 3"/></svg>Explore</a>
+      <a href="https://otcdesks.cash/launcher" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M9 2c2.5.5 4.5 2.5 5 5l-3.5 1L7 4.5Z"/><path d="M7 4.5 3 8l2 1 2 2 1 2 3.5-4"/><path d="m4 12-1.5 1.5M6 13l-.75.75"/></svg>Launcher</a>
+      <a href="https://otcdesks.cash/rewards" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><rect x="2.5" y="6" width="11" height="7.5" rx="1"/><path d="M2.5 8.5h11M8 6v7.5M5 6c-1.5 0-2-1-2-1.75S3.75 3 4.5 3C6 3 8 6 8 6s2-3 3.5-3c.75 0 1.5.5 1.5 1.25S12.5 6 11 6"/></svg>Rewards</a>
+      <a class="is-here" href="#top" aria-current="page"><svg viewBox="0 0 16 16"><path d="M2.5 2.5v11h11"/><path d="m4.5 10 3-3 2 2 4-4.5"/></svg>Revenue</a>
+      <a href="https://otcdesks.cash/desks" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><rect x="2.5" y="3" width="11" height="7" rx="1"/><path d="M5.5 13h5M8 10v3"/></svg>Desks</a>
+      <a href="https://otcdesks.cash/mint" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/><path d="M8 5.5v5M5.5 8h5"/></svg>Mint</a>
+    </nav>
+    <div class="rv-side-label">Desks</div>
+    <nav class="rv-side-nav">
+      <a href="https://fxdesks.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M2.5 8h11M8 2.5c2 2 2 9 0 11M8 2.5c-2 2-2 9 0 11"/></svg>FX<span class="rv-side-ext">&nearr;</span></a>
+      <a href="https://bonddesks.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M3 13.5V9h3v4.5M6.5 13.5V6h3v7.5M10 13.5V3h3v10.5"/></svg>BOND<span class="rv-side-ext">&nearr;</span></a>
+      <a href="https://tradeterminal.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><rect x="2.5" y="3" width="11" height="10" rx="1"/><path d="m5 6.5 2 1.5-2 1.5M8.5 9.5h3"/></svg>TRADE<span class="rv-side-ext">&nearr;</span></a>
+      <a href="https://otcdvdn.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><rect x="2.5" y="4" width="11" height="8" rx="1"/><path d="M5 7h6M5 9.5h3"/></svg>DVDN<span class="rv-side-ext">&nearr;</span></a>
+      <a href="https://prog.cash/" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M5 2.5h8.5v11h-11v-8.5Z"/><path d="M5.5 6h1M8 6h1M10.5 6h1M5.5 8.5h1M8 8.5h1M5.5 11h1M10.5 11h1"/></svg>PROG<span class="rv-side-ext">&nearr;</span></a>
+    </nav>
+    <div class="rv-side-label">Information</div>
+    <nav class="rv-side-nav">
+      <a href="https://otcdesks.cash/docs" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M3.5 2.5h6l3 3v8h-9Z"/><path d="M9.5 2.5v3h3"/></svg>Docs</a>
+      <a href="https://otcdesks.cash/terms" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M3.5 2.5h9v11h-9Z"/><path d="M5.5 5.5h5M5.5 8h5M5.5 10.5h3"/></svg>Terms</a>
+    </nav>
+  </aside>
+<div class="rv-shell">
+  <header class="rv-header">
+    <a href="#top" class="rv-brand" aria-label="OTC REV home">
+      <img src="./logo-till.png" alt="" width="38" height="38" class="rv-brand-logo" draggable="false">
+      <span class="rv-brand-text"><span class="rv-brand-word">OTC REV</span><span class="rv-brand-domain">otcrev.cash</span></span>
+    </a>
+    <div class="rv-sibs">
+      <a id="revTokenLink" class="rv-sib rv-sib-rev" href="#rev" aria-disabled="true" title="$REV — launching">$REV</a>
+      <a class="rv-sib" href="https://otcdesks.cash/" target="_blank" rel="noopener">OTC</a>
+    </div>
+    <nav aria-label="Main" class="rv-nav">
+      <a href="#daily">Day by day</a>
+      <a href="#split">Split</a>
+      <a href="#ledger">Ledger</a>
+      <a href="#engine">Engine</a>
+      <a href="#rev">$REV</a>
+      <a href="#verify">Verify</a>
+    </nav>
+    <button id="themeBtn" class="rv-iconbtn" type="button" aria-label="Toggle theme">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" width="15" height="15"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.2v1.8M8 13v1.8M1.2 8H3M13 8h1.8M3.2 3.2l1.3 1.3M11.5 11.5l1.3 1.3M12.8 3.2l-1.3 1.3M4.5 11.5l-1.3 1.3" stroke-linecap="round"/></svg>
+    </button>
+    <a id="revBuy" href="#" class="rv-cta" target="_blank" rel="noopener" hidden>Buy $REV</a>
+    <a href="https://otcdesks.cash/launcher" class="rv-cta rv-cta-2" target="_blank" rel="noopener">Launch a coin</a>
+  </header>
+
+  <main id="top" class="rv-main">
+    <!-- THE LEDGER CARD — mirrors the reference: one all-time figure, four ways it was split, three things it destroyed or built -->
+    <section class="rv-card" aria-label="All-time protocol revenue">
+      <div class="rv-card-top">
+        <span class="rv-status" id="status"><span class="rv-led" id="led" aria-hidden="true"></span><span>Ledger read <span id="stAgo">—</span></span></span>
+        <span class="rv-eyebrow">All time · <b>Protocol revenue</b></span>
+      </div>
+      <div class="rv-big-label">Claimed in creator fees</div>
+      <div class="rv-big"><span class="rv-big-n" id="bigN">—</span><span class="rv-big-u">SOL</span></div>
+      <p class="rv-big-sub">Every lamport of it claimed from pump on behalf of a coin launched on OTC. <b id="bigUsd"></b></p>
+
+      <div class="rv-tiles">
+        <div class="rv-tile rv-tile-hi">
+          <div class="rv-tile-l">To holders</div>
+          <div class="rv-tile-n"><span id="tHold">—</span><small>SOL</small></div>
+          <div class="rv-tile-s"><span id="tHoldPct">—</span> of every fee claimed</div>
+        </div>
+        <div class="rv-tile">
+          <div class="rv-tile-l">Protocol</div>
+          <div class="rv-tile-n"><span id="tProto">—</span><small>SOL</small></div>
+          <div class="rv-tile-s">Operating the desks</div>
+        </div>
+        <div class="rv-tile">
+          <div class="rv-tile-l">Buyback</div>
+          <div class="rv-tile-n"><span id="tBuy">—</span><small>SOL</small></div>
+          <div class="rv-tile-s"><span id="tBuySpent">—</span> SOL deployed so far</div>
+        </div>
+        <div class="rv-tile">
+          <div class="rv-tile-l">Reward pot</div>
+          <div class="rv-tile-n"><span id="tPot">—</span><small>SOL</small></div>
+          <div class="rv-tile-s">Held against coins still owed</div>
+        </div>
+      </div>
+      <div class="rv-tiles rv-tiles-3">
+        <div class="rv-tile">
+          <div class="rv-tile-l">OTC bought and burned</div>
+          <div class="rv-tile-n"><span id="tBurned">—</span><small>OTC</small></div>
+          <div class="rv-tile-s">Across <span id="tBurns">—</span> burns, each one on chain</div>
+        </div>
+        <div class="rv-tile">
+          <div class="rv-tile-l">Burned by desks</div>
+          <div class="rv-tile-n"><span id="tDeskBurn">—</span><small>OTC</small></div>
+          <div class="rv-tile-s">From <span id="tDesks">—</span> desks opened</div>
+        </div>
+        <div class="rv-tile">
+          <div class="rv-tile-l">OTC market cap</div>
+          <div class="rv-tile-n"><span id="tMcap">—</span></div>
+          <div class="rv-tile-s"><span id="tPrice">—</span> a token</div>
+        </div>
+      </div>
+      <div class="rv-card-foot">
+        <p>Read live from the protocol's own ledger. Every claim, burn and payout is a signature.</p>
+        <span class="rv-chg" id="otcChg">—</span>
+      </div>
+    </section>
+
+    <!-- DAY BY DAY -->
+    <section id="daily" class="rv-section">
+      <div class="rv-sec-head">
+        <div>
+          <h2 class="rv-h2">Day by day</h2>
+          <p class="rv-subtle">SOL claimed in creator fees each day, and what each day sent on to holders. Hover a bar for the full split of that day.</p>
+        </div>
+        <div class="rv-range" role="group" aria-label="Series and range">
+          <button class="rv-chip is-on" data-series="earned" type="button">Claimed</button>
+          <button class="rv-chip" data-series="toHolders" type="button">To holders</button>
+          <button class="rv-chip" data-series="spent" type="button">Buyback spent</button>
+          <span class="rv-chip-sep" aria-hidden="true"></span>
+          <button class="rv-chip" data-range="7" type="button">7D</button>
+          <button class="rv-chip is-on" data-range="30" type="button">30D</button>
+          <button class="rv-chip" data-range="0" type="button">All</button>
+        </div>
+      </div>
+      <div class="rv-chart-wrap">
+        <div class="rv-chart-title"><span id="chTitle">—</span><span class="rv-chart-sum" id="chSum">—</span></div>
+        <div class="rv-chart" id="chart"></div>
+        <div class="rv-tip" id="tip" hidden></div>
+        <details class="rv-table-toggle"><summary>Table view</summary><div class="rv-table-scroll"><table class="rv-table" id="chTable"></table></div></details>
+      </div>
+    </section>
+
+    <!-- SPLIT -->
+    <section id="split" class="rv-section">
+      <h2 class="rv-h2">Where every fee goes</h2>
+      <p class="rv-subtle">Coins launched through OTC assign their creator fees to the protocol, which claims them and splits each claim in the same transaction. The shares below are computed from the ledger totals, not quoted from a doc.</p>
+      <div class="rv-split">
+        <div class="rv-split-bar" id="splitBar" role="img" aria-label="Revenue split"></div>
+        <ul class="rv-legend" id="splitLegend"></ul>
+        <p class="rv-fine" id="splitFine"></p>
+      </div>
+    </section>
+
+    <!-- LEDGER + SUPPLY -->
+    <section id="ledger" class="rv-section">
+      <h2 class="rv-h2">Live ledger</h2>
+      <p class="rv-subtle">The last thirty buyback transactions. Every row is a signature; click one to read it on chain.</p>
+      <div class="rv-two">
+        <div class="rv-panel">
+          <div class="rv-panel-head"><h3 class="rv-h3">Activity</h3><p class="rv-fine" id="tapeCount">—</p></div>
+          <ul class="rv-tape" id="tape"></ul>
+        </div>
+        <div class="rv-panel">
+          <div class="rv-panel-head"><h3 class="rv-h3">Supply destroyed</h3></div>
+          <div class="rv-stack" id="stack"></div>
+          <p class="rv-fine">Only the first is funded by revenue. A desk mint burns its deposit outright, which is why far more supply has been destroyed than the buybacks alone account for.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ENGINE + VOLUME -->
+    <section id="engine" class="rv-section">
+      <h2 class="rv-h2">The buyback engine</h2>
+      <p class="rv-subtle">Bought and burned in separate transactions, so the purchase is visible on chain before the burn is.</p>
+      <div class="rv-two">
+        <div class="rv-panel">
+          <ul class="rv-kv" id="engineKv"></ul>
+        </div>
+        <div class="rv-panel">
+          <div class="rv-panel-head"><h3 class="rv-h3">Traded volume</h3></div>
+          <ul class="rv-kv" id="volume"></ul>
+          <p class="rv-fine">Fees are a share of this, so it is the ceiling on everything above.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- $REV -->
+    <section id="rev" class="rv-section">
+      <h2 class="rv-h2">$REV</h2>
+      <p class="rv-subtle">The token behind the revenue desk.</p>
+      <div class="rv-token">
+        <img src="./logo-till.png" alt="REV — a pixel cash register with an open drawer" class="rv-token-mark" width="220" height="220" draggable="false">
+        <div class="rv-token-body">
+          <p class="rv-token-sym">$REV</p>
+          <p>REV is the desk token for OTC revenue: the ticker that tracks the ledger on this page. One contract address, published here the moment it exists, verified on chain before it is linked.</p>
+          <p>Until then nothing on this page is for sale. The figures above are the protocol's, read from its own feed, and they do not depend on $REV in any way.</p>
+          <div class="rv-token-ca">
+            <span class="rv-lab">Contract</span>
+            <span class="rv-code" id="revCa"><span class="rv-soon" id="revSoon">Launching</span></span>
+            <a id="revBuy2" class="rv-btn" href="#" target="_blank" rel="noopener" hidden>Buy $REV</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VERIFY -->
+    <section id="verify" class="rv-section">
+      <h2 class="rv-h2">Verify</h2>
+      <p class="rv-subtle">Nothing here is typed in. The desk reads one public feed, snapshots it every fifteen minutes, and shows what it found.</p>
+      <div class="rv-verify">
+        <div class="rv-vrow"><span class="rv-lab">Feed</span><span class="rv-code"><a href="https://otcdesks.cash/api/revenue" target="_blank" rel="noopener">otcdesks.cash/api/revenue</a></span></div>
+        <div class="rv-vrow"><span class="rv-lab">Snapshot</span><span class="rv-code"><a href="./data/live.json" target="_blank" rel="noopener">data/live.json</a> · <span id="footSync">—</span></span></div>
+        <div class="rv-vrow"><span class="rv-lab">OTC mint</span><span class="rv-code"><a href="https://solscan.io/token/MukLDtJ8Cx9DxLbeyLRSWPSposTMWuwHANbuaudpump" target="_blank" rel="noopener">MukLDtJ8Cx9DxLbeyLRSWPSposTMWuwHANbuaudpump</a></span></div>
+        <div class="rv-vrow"><span class="rv-lab">SOL price</span><span class="rv-code" id="solSrc">DexScreener, live in your browser</span></div>
+        <div class="rv-vrow"><span class="rv-lab">Source</span><span class="rv-code"><a href="https://github.com/TheMemeBanker/otcrev-site" target="_blank" rel="noopener">github.com/TheMemeBanker/otcrev-site</a></span></div>
+      </div>
+    </section>
+
+    <footer class="rv-footer">
+      <div class="rv-foot-brand"><img src="./favicon-till.png" alt="" width="18" height="18" style="image-rendering:pixelated" draggable="false">OTC REV</div>
+      <p class="rv-foot-line">otcrev.cash is the revenue desk of the OTC family: <a href="https://otcdesks.cash/" target="_blank" rel="noopener">otcdesks.cash</a> · <a href="https://fxdesks.cash/" target="_blank" rel="noopener">fxdesks.cash</a> · <a href="https://bonddesks.cash/" target="_blank" rel="noopener">bonddesks.cash</a> · <a href="https://tradeterminal.cash/" target="_blank" rel="noopener">tradeterminal.cash</a> · <a href="https://otcdvdn.cash/" target="_blank" rel="noopener">otcdvdn.cash</a> · <a href="https://prog.cash/" target="_blank" rel="noopener">prog.cash</a>. Figures are the protocol's own, read from its public feed; nothing on this page is advice or an offer.</p>
+    </footer>
+  </main>
+</div>
+</div>
+<script src="./app.js"></script>
+</body>
+</html>
